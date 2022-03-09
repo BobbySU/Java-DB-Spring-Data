@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "books")
-public class Book extends BaseEntry{
+public class Book extends BaseEntry {
     @Column(name = "title", length = 50, nullable = false)
     private String title;
 
@@ -36,6 +36,19 @@ public class Book extends BaseEntry{
     private Set<Category> category;
 
     public Book() {
+    }
+
+    public Book(EditionType editionType, LocalDate releaseDate, int copies,
+                BigDecimal price, AgeRestriction ageRestriction, String title,
+                Author author, Set<Category> categories) {
+        this.editionType = editionType;
+        this.releaseDate = releaseDate;
+        this.copies = copies;
+        this.price = price;
+        this.ageRestriction = ageRestriction;
+        this.title = title;
+        this.author = author;
+        this.category = categories;
     }
 
     public String getTitle() {

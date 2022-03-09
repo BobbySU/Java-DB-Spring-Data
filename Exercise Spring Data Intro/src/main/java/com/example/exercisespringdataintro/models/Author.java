@@ -2,11 +2,13 @@ package com.example.exercisespringdataintro.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.Set;
 
 @Entity
 @Table(name = "authors")
-public class Author extends BaseEntry{
+public class Author extends BaseEntry {
 
     @Column(name = "first_name")
     private String firstName;
@@ -14,7 +16,15 @@ public class Author extends BaseEntry{
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @OneToMany(mappedBy = "author")
+    public Set<Book> books;
+
     public Author() {
+    }
+
+    public Author(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getFirstName() {

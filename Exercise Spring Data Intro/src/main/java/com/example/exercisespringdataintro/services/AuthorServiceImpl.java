@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -39,5 +40,10 @@ public class AuthorServiceImpl implements AuthorService {
     public Author getRandomAuthor() {
         long randomId = ThreadLocalRandom.current().nextLong(1, authorRepository.count() + 1);
         return authorRepository.findById(randomId).orElse(null);
+    }
+
+    @Override
+    public List<Author> getAllAuthorsAndThereBookCount() {
+        return authorRepository.findAllByBooksSizeDESC();
     }
 }

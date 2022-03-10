@@ -1,9 +1,6 @@
 package com.example.exercisespringdataintro.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -16,7 +13,7 @@ public class Author extends BaseEntry {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     public Set<Book> books;
 
     public Author() {

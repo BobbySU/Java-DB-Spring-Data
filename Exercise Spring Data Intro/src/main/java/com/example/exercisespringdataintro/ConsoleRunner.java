@@ -26,10 +26,21 @@ public class ConsoleRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         seedData();
 
+// TODO: 10/03/2022   ------ Select the Method you want to TEST -------
 //        printAllBooksAfterYear(2000);
 //        printAllAuthorsWithBooksBeforeYear(1990);
 //        printAllAuthorsAndThereBookCount();
+//        printAllBooksByAuthorOrderByDate("George", "Powell");
+    }
 
+    private void printAllBooksByAuthorOrderByDate(String firstName, String lastName) {
+        bookService.findAllBooksByAuthorOrderByDateAndTitle(firstName,lastName)
+                .forEach(e->System.out.printf("%s %s %d%n", e.getTitle(), e.getReleaseDate(),e.getCopies()));
+    }
+
+    private void printAllAuthorsAndThereBookCount() {
+        authorService.getAllAuthorsAndThereBookCount()
+                .forEach(e -> System.out.printf("%s %s %d%n", e.getFirstName(), e.getLastName(), e.books.size()));
     }
 
     private void printAllAuthorsWithBooksBeforeYear(int year) {

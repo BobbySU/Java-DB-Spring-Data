@@ -66,4 +66,10 @@ public class Shampoo extends BaseEntity {
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s %.2f lv",
+                this.getBrand(), this.getSize().name(), this.getPrice());
+    }
 }

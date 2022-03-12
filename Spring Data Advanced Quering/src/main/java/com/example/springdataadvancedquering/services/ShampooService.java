@@ -5,6 +5,7 @@ import com.example.springdataadvancedquering.entities.Size;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 public interface ShampooService {
     List<Shampoo> selectBySize(Size size);
@@ -16,4 +17,6 @@ public interface ShampooService {
     int countPriceLowerThan(BigDecimal price);
 
     List<Shampoo> selectByIngredientsCount(int count);
+
+    List<Shampoo> selectByIngredients(Set<String> names);
 }

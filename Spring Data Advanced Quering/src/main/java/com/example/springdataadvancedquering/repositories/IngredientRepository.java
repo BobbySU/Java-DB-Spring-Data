@@ -16,8 +16,11 @@ public interface IngredientRepository extends JpaRepository<Ingredient,Long> {
 
     int deleteByName(String name);
 
-    // FIXME: Wrong value for multiplication
     @Modifying
     @Query("UPDATE Ingredient i SET i.price = i.price * :multiplier")
     void increasePriceByPercent(@Param("multiplier") BigDecimal percent);
+
+    @Modifying
+    @Query("UPDATE Ingredient i SET i.price = i.price * :multiplier WHERE i.name IN :names")
+    void increasePriceByPercentAndName(@Param("multiplier") BigDecimal percent, @Param("names") List<String> names);
 }

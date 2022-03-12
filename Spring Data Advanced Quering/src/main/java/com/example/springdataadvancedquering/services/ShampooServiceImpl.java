@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ShampooServiceImpl implements ShampooService {
@@ -39,5 +40,10 @@ public class ShampooServiceImpl implements ShampooService {
     @Override
     public List<Shampoo> selectByIngredientsCount(int count) {
         return this.shampooRepository.findByIngredientCountLessThan(count);
+    }
+
+    @Override
+    public List<Shampoo> selectByIngredients(Set<String> names) {
+        return this.shampooRepository.findByIngredients(names);
     }
 }

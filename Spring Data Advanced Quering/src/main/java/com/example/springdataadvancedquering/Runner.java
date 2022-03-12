@@ -43,47 +43,30 @@ public class Runner implements CommandLineRunner {
 //        this.shampooService.selectBySizeOrLabelId(MEDIUM,10)
 //                .forEach(System.out::println);
 
-//        BigDecimal price = new BigDecimal(5);
-//        this.shampooService.selectMoreExpensiveThan(price)
+//        this.shampooService.selectMoreExpensiveThan(new BigDecimal(5))
 //                .forEach(System.out::println);
 
 //        this.ingredientService.selectNameStartsWith("M")
 //                .forEach(e->System.out.printf("%s%n",e.getName()));
 
-//        List<String> names= new ArrayList<>();
-//        names.add("Lavender");
-//        names.add("Herbs");
-//        names.add("Apple");
-//        this.ingredientService.selectInNames(names)
-//                .forEach(e->System.out.printf("%s%n",e.getName()));
+//        this.ingredientService.selectInNames(List.of("Lavender", "Herbs", "Apple"))
+//                .forEach(e -> System.out.printf("%s%n", e.getName()));
 
-//        BigDecimal price1 = new BigDecimal(8.50);
 //        int result = this.shampooService.
-//                countPriceLowerThan(price1);
+//                countPriceLowerThan(new BigDecimal(8.50));
 //        System.out.println(result);
 
+//        not Work
+//        this.shampooService.selectByIngredients(Set.of("Berry", "Mineral-Collagen"))
+//                .forEach(System.out::println);
 
+//        this.shampooService.selectByIngredientsCount(2)
+//                .forEach(e -> System.out.printf("%s%n", e.getBrand()));
 
-//        this.ingredientService.increasePriceByPercentage(0.1);
-//            .forEach(System.out::println);
-    }
+//        this.ingredientService.deleteByName("Apple");
 
-    private void demo() {
-        Scanner scanner = new Scanner(System.in);
+//        this.ingredientService.increasePriceByPercentage(1.1);
 
-        String first = scanner.nextLine();
-        String second = scanner.nextLine();
-
-        Set<String> names = Set.of(first, second);
-
-        this.shampooRepository.findByIngredientsNames(names)
-                .forEach(System.out::println);
-
-
-//        String sizeName = scanner.nextLine();
-//        Size size = Size.valueOf(sizeName);
-//
-//        this.shampooRepository.findBySizeOrderById(size)
-//            .forEach(System.out::println);
+//        this.ingredientService.increasePriceByPercentageAndName(1.1, List.of("Apple","Nettle","Macadamia Oil"));
     }
 }

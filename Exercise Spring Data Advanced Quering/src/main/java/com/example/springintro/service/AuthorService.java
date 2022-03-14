@@ -13,4 +13,6 @@ public interface AuthorService {
     List<String> getAllAuthorsOrderByCountOfTheirBooks();
 
     List<String> getAllAuthorsWithGivenString(String firstNameStr);
+
+    List<String> findAuthorsAndThereCopies();
 }

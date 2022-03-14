@@ -140,6 +140,13 @@ public class BookServiceImpl implements BookService {
         return bookRepository.countBooksByTitleLengthMoreThan(num);
     }
 
+    @Override
+    public String findBookByTitle(String title) {
+        Book book = bookRepository.findBookByTitleIsLike(title);
+        return String.format("%s %s %s %.2f", book.getTitle(), book.getEditionType(), book.getAgeRestriction(),
+                book.getPrice());
+    }
+
     private Book createBookFromInfo(String[] bookInfo) {
         EditionType editionType = EditionType.values()[Integer.parseInt(bookInfo[0])];
         LocalDate releaseDate = LocalDate

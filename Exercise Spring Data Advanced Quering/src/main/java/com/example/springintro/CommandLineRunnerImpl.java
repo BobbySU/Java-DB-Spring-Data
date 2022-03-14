@@ -52,14 +52,21 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
             case 8 -> bookTitlesSearch();
             case 9 -> countBooks();
             case 10 -> totalBookCopies();
-//            case 11 ->
+            case 11 -> reducedBook();
         }
 
 
     }
 
+    private void reducedBook() throws IOException {
+        System.out.println(" ------ Enter book title:");
+        String title = bufferedReader.readLine().toLowerCase().trim();
+        System.out.println(bookService.findBookByTitle(title));
+    }
+
     private void totalBookCopies() {
-        
+        authorService.findAuthorsAndThereCopies()
+                .forEach(System.out::println);
     }
 
     private void countBooks() throws IOException {

@@ -47,15 +47,49 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
             case 3 -> booksByPrice();
             case 4 -> notReleasedBooks();
             case 5 -> booksReleasedBeforeDate();
-//            case 6 ->
-//            case 7 ->
-//            case 8 ->
-//            case 9 ->
-//            case 10 ->
+            case 6 -> authorsSearch();
+            case 7 -> booksSearch();
+            case 8 -> bookTitlesSearch();
+            case 9 -> countBooks();
+            case 10 -> totalBookCopies();
 //            case 11 ->
         }
 
 
+    }
+
+    private void totalBookCopies() {
+        
+    }
+
+    private void countBooks() throws IOException {
+        System.out.println(" ------ Enter title is longer than a given number:");
+        int num = Integer.parseInt(bufferedReader.readLine());
+        int countOfBooks = bookService.findCountOfBooksWithNameLongerThen(num);
+        System.out.println(countOfBooks);
+        System.out.println("Comments:");
+        System.out.printf("There are %d books with longer title than %d symbols%n", countOfBooks, num);
+    }
+
+    private void bookTitlesSearch() throws IOException {
+        System.out.println(" ------ Enter authors last name starts with a given string:");
+        String str = bufferedReader.readLine().toLowerCase();
+        bookService.findAllBooksByAuthorLastNameStartWithString(str)
+                .forEach(System.out::println);
+    }
+
+    private void booksSearch() throws IOException {
+        System.out.println(" ------ Enter name contain a given string:");
+        String str = bufferedReader.readLine().toLowerCase();
+        bookService.findAllBooksContainGivenString(str)
+                .forEach(System.out::println);
+    }
+
+    private void authorsSearch() throws IOException {
+        System.out.println(" ------ Enter first name ends with a given string:");
+        String firstNameStr = "%" + bufferedReader.readLine();
+        authorService.getAllAuthorsWithGivenString(firstNameStr)
+                .forEach(System.out::println);
     }
 
     private void booksReleasedBeforeDate() throws IOException {

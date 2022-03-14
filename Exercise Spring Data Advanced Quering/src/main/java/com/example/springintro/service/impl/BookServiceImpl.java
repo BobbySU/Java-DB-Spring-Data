@@ -119,6 +119,27 @@ public class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<String> findAllBooksContainGivenString(String str) {
+        return bookRepository.findBooksByTitleIsContaining(str)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findAllBooksByAuthorLastNameStartWithString(String str) {
+        return bookRepository.findAllByAuthor_LastNameStartsWith(str)
+                .stream().map(Book->String.format("%s (%s %s)",
+                        Book.getTitle(), Book.getAuthor().getFirstName(), Book.getAuthor().getLastName()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public int findCountOfBooksWithNameLongerThen(int num) {
+        return bookRepository.countBooksByTitleLengthMoreThan(num);
+    }
+
     private Book createBookFromInfo(String[] bookInfo) {
         EditionType editionType = EditionType.values()[Integer.parseInt(bookInfo[0])];
         LocalDate releaseDate = LocalDate

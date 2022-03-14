@@ -4,6 +4,7 @@ import com.example.springintro.model.entity.AgeRestriction;
 import com.example.springintro.model.entity.Book;
 import com.example.springintro.model.entity.EditionType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -37,4 +38,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     int countBooksByTitleLengthMoreThan(@Param(value = "param") int length);
 
     Book findBookByTitleIsLike(String title);
+
+    @Modifying
+    @Query("UPDATE Book b SET b.copies = b.copies + :copies WHERE b.releaseDate > :date")
+    int updatedBookCopies(@Param(value = "copies") int copies, @Param(value = "date") LocalDate localDate);
 }

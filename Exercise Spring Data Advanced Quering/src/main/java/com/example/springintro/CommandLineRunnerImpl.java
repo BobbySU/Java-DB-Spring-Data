@@ -8,6 +8,7 @@ import com.example.springintro.service.CategoryService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -41,7 +42,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         System.out.println(" ------ Please Select Exercise/int/:");
         int exNum = Integer.parseInt(bufferedReader.readLine());
 
-        switch (exNum){
+        switch (exNum) {
             case 1 -> booksTitlesByAge();
             case 2 -> goldenBooks();
             case 3 -> booksByPrice();
@@ -53,9 +54,22 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
             case 9 -> countBooks();
             case 10 -> totalBookCopies();
             case 11 -> reducedBook();
+            case 12 -> increaseBookCopies();
         }
 
 
+    }
+
+    private void increaseBookCopies() throws IOException {
+        System.out.println(" ------ Enter released date:");
+        LocalDate localDate = LocalDate.parse(bufferedReader.readLine(), DateTimeFormatter.ofPattern("dd MMM yyyy"));
+        System.out.println(" ------ Enter book copies:");
+        int copies = Integer.parseInt(bufferedReader.readLine());
+        int bookUpdate = bookService.updatedBookCopies(localDate, copies);
+        System.out.println(bookUpdate);
+        System.out.println("Comments:");
+        System.out.printf("%d books are released after %s, so total of %d book copies were added%n",
+                bookUpdate, localDate, bookUpdate * copies);
     }
 
     private void reducedBook() throws IOException {

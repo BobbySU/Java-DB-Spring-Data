@@ -33,4 +33,6 @@ public interface BookService {
     int findCountOfBooksWithNameLongerThen(int num);
 
     String findBookByTitle(String title);
+
+    int updatedBookCopies(LocalDate localDate, int copies);
 }

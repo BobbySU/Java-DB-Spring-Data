@@ -7,6 +7,7 @@ import com.example.springintro.service.BookService;
 import com.example.springintro.service.CategoryService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
@@ -145,6 +146,12 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findBookByTitleIsLike(title);
         return String.format("%s %s %s %.2f", book.getTitle(), book.getEditionType(), book.getAgeRestriction(),
                 book.getPrice());
+    }
+
+    @Override
+    @Transactional
+    public int updatedBookCopies(LocalDate localDate, int copies) {
+        return bookRepository.updatedBookCopies(copies,localDate);
     }
 
     private Book createBookFromInfo(String[] bookInfo) {

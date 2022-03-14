@@ -79,6 +79,46 @@ public class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<String> findAllBooksWithAgeRestriction(AgeRestriction ageRestriction) {
+        return bookRepository.findBooksByAgeRestriction(ageRestriction)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findAllGoldBookWithCopiesLessThan5000() {
+        return bookRepository.findAllByEditionTypeAndCopiesLessThan(EditionType.GOLD,5000)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findAllBooksWithPriceLowerThen5OrHigherThen40() {
+        return bookRepository.findAllByPriceLessThanOrPriceGreaterThan(BigDecimal.valueOf(5), BigDecimal.valueOf(40))
+                .stream().map(Book->String.format("%s - $%.2f", Book.getTitle(), Book.getPrice()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findNotReleasedBooksInYear(int year) {
+        LocalDate start = LocalDate.of(year, 1, 1);
+        LocalDate end = LocalDate.of(year,12,31);
+        return bookRepository.findAllByReleaseDateBeforeOrReleaseDateAfter(start,end)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> findAllBooksReleasedBeforeDate(LocalDate localDate) {
+        return bookRepository.findAllByReleaseDateBefore(localDate)
+                .stream().map(Book->String.format("%s %s %.2f", Book.getTitle(),Book.getEditionType(), Book.getPrice()))
+                .collect(Collectors.toList());
+    }
+
     private Book createBookFromInfo(String[] bookInfo) {
         EditionType editionType = EditionType.values()[Integer.parseInt(bookInfo[0])];
         LocalDate releaseDate = LocalDate

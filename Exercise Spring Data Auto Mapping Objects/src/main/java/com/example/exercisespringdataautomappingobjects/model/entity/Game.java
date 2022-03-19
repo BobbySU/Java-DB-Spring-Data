@@ -11,8 +11,8 @@ import java.time.LocalDate;
 public class Game extends BaseEntity {
     @Column
     private String title;
-    @Column(name = "trailer_id")
-    private String trailerId;
+    @Column(name = "trailer")
+    private String trailer;
     @Column(name = "image_thumbnail")
     private String imageThumbnail;
     @Column
@@ -35,12 +35,12 @@ public class Game extends BaseEntity {
         this.title = title;
     }
 
-    public String getTrailerId() {
-        return trailerId;
+    public String getTrailer() {
+        return trailer;
     }
 
-    public void setTrailerId(String trailerId) {
-        this.trailerId = trailerId;
+    public void setTrailer(String trailer) {
+        this.trailer = trailer;
     }
 
     public String getImageThumbnail() {

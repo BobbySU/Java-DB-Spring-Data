@@ -62,6 +62,8 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
                 case "DetailGame" -> gameService.getDetailGame(commands[1]);
 
                 case "OwnedGames" -> gameService.getAllGames();
+
+                default -> System.out.println("Please enter valid command!");
             }
         }
     }

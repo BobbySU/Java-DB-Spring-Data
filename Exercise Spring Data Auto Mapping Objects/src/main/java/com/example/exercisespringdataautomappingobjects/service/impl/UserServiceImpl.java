@@ -77,8 +77,8 @@ public class UserServiceImpl implements UserService {
         if (loggedInUser == null) {
             System.out.println("Cannot log out. No user was logged in.");
         } else {
+            System.out.printf("User %s successfully log out.%n", loggedInUser.getFullName());
             loggedInUser = null;
-            System.out.println("Successfully log out.");
         }
     }
 }

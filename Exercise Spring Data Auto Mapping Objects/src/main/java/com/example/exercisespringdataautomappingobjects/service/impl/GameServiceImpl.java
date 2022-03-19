@@ -96,15 +96,13 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void getDetailGame(String command) {
-        Game game = gameRepository.findByTitle(command).orElse(null);
+        List<Game> games = gameRepository.findByTitle(command);
 
-        if (game == null){
+        if (games == null){
             System.out.println("Incorrect Game Title");
             return;
         }
-
-        System.out.printf("Title: %s%nPrice: %.2f%nDescription: %s%nRelease date: %s%n",
-                game.getTitle(),game.getPrice(),game.getDescription(),game.getReleaseDate());
+        games.stream().forEach(game -> System.out.printf("Title: %s%nPrice: %.2f%nDescription: %s%nRelease date: %s%n",
+                game.getTitle(),game.getPrice(),game.getDescription(),game.getReleaseDate()));
     }
-
 }

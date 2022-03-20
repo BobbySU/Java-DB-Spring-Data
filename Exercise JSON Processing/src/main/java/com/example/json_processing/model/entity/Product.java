@@ -2,6 +2,7 @@ package com.example.json_processing.model.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,13 +14,10 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @ManyToOne
     private User seller;
 
-    @ManyToOne
     private User buyer;
 
-    @ManyToMany
     private Set<Category> categories;
 
     public Product() {
@@ -41,6 +39,7 @@ public class Product extends BaseEntity {
         this.price = price;
     }
 
+    @ManyToOne
     public User getSeller() {
         return seller;
     }
@@ -49,6 +48,7 @@ public class Product extends BaseEntity {
         this.seller = seller;
     }
 
+    @ManyToOne
     public User getBuyer() {
         return buyer;
     }
@@ -57,6 +57,7 @@ public class Product extends BaseEntity {
         this.buyer = buyer;
     }
 
+    @ManyToMany
     public Set<Category> getCategories() {
         return categories;
     }

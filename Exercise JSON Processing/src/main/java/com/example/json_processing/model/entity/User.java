@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,7 +20,6 @@ public class User extends BaseEntity {
     @Column
     private Integer age;
 
-    @ManyToMany
     private Set<User> friends;
 
     public User() {
@@ -49,6 +49,7 @@ public class User extends BaseEntity {
         this.age = age;
     }
 
+    @ManyToMany
     public Set<User> getFriends() {
         return friends;
     }

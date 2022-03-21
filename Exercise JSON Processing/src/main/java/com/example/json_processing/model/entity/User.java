@@ -57,7 +57,7 @@ public class User extends BaseEntity {
         this.friends = friends;
     }
 
-    @OneToMany(mappedBy = "seller")
+    @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
     public Set<Product> getSoldProducts() {
         return soldProducts;
     }

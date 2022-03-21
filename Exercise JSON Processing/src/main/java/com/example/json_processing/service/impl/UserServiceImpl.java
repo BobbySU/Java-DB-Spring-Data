@@ -1,6 +1,7 @@
 package com.example.json_processing.service.impl;
 
 import com.example.json_processing.model.dto.UserSeedDTO;
+import com.example.json_processing.model.dto.UserSoldDTO;
 import com.example.json_processing.model.entity.User;
 import com.example.json_processing.repository.UserRepository;
 import com.example.json_processing.service.UserService;
@@ -13,7 +14,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import static com.example.json_processing.constants.GlobalConstants.RESOURCES_FILE_PATH;
 
@@ -51,5 +54,13 @@ public class UserServiceImpl implements UserService {
         Long randomId = ThreadLocalRandom.current().nextLong(1, userRepository.count() + 1);
 
         return userRepository.findById(randomId).orElse(null);
+    }
+
+    @Override
+    public List<UserSoldDTO> findAllUserWithMoreThenOneSoldProduct() {
+        return userRepository.findAllWithSoldProductOrderByLastAndFirstName()
+                .stream()
+                .map(user -> modelMapper.map(user, UserSoldDTO.class))
+                .collect(Collectors.toList());
     }
 }

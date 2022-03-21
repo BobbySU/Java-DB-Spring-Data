@@ -1,6 +1,7 @@
 package com.example.json_processing;
 
 import com.example.json_processing.model.dto.ProductNamePriceAndSellerDTO;
+import com.example.json_processing.model.dto.UserSoldDTO;
 import com.example.json_processing.service.CategoryService;
 import com.example.json_processing.service.ProductService;
 import com.example.json_processing.service.UserService;
@@ -22,6 +23,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     public static final String OUTPUT_PATH = "src/main/resources/files/out/";
     public static final String PRODUCTS_IN_RANGE_FILE = "products-in-range.json";
+    public static final String USERS_SOLD_PRODUCTS_FILE = "users-sold-products.json";
 
     private final CategoryService categoryService;
     private final UserService userService;
@@ -48,16 +50,21 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
         switch (exNum) {
             case 1 -> Query1_ProductsInRange();
-//            case 2 -> Query2_SuccessfullySoldProducts();
+            case 2 -> Query2_SuccessfullySoldProducts();
 //            case 3 -> 3();
 //            case 4 -> 4();
             default -> System.out.println("Please enter valid Exercise/int/");
         }
     }
 
-    private void Query2_SuccessfullySoldProducts() {
+    private void Query2_SuccessfullySoldProducts() throws IOException {
+        List<UserSoldDTO> userSoldDTOS = userService.findAllUserWithMoreThenOneSoldProduct();
 
+        String content = gson.toJson(userSoldDTOS);
 
+        writeToFile(OUTPUT_PATH + USERS_SOLD_PRODUCTS_FILE, content);
+
+        System.out.println("------ Write output information in File: users-sold-products.json ------");
     }
 
     private void Query1_ProductsInRange() throws IOException {

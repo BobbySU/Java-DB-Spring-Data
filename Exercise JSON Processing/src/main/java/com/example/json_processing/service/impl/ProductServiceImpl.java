@@ -1,5 +1,6 @@
 package com.example.json_processing.service.impl;
 
+import com.example.json_processing.model.dto.ProductNamePriceAndSellerDTO;
 import com.example.json_processing.model.dto.ProductSeedDTO;
 import com.example.json_processing.model.entity.Product;
 import com.example.json_processing.repository.ProductRepository;
@@ -16,6 +17,8 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.json_processing.constants.GlobalConstants.RESOURCES_FILE_PATH;
 
@@ -56,12 +59,26 @@ public class ProductServiceImpl implements ProductService {
                 .map(productSeedDTO -> {
                     Product product = modelMapper.map(productSeedDTO, Product.class);
                     product.setSeller(userService.findRandomUser());
-                    if (product.getPrice().compareTo(BigDecimal.valueOf(500)) > 0) {
+                    if (product.getPrice().compareTo(BigDecimal.valueOf(500)) < 0) {
                         product.setBuyer(userService.findRandomUser());
                     }
                     product.setCategories(categoryService.findRandomCategory());
                     return product;
                 })
                 .forEach(productRepository::save);
+    }
+
+    @Override
+    public List<ProductNamePriceAndSellerDTO> findAllProductsInRangeOrderByPrice(BigDecimal lower, BigDecimal upper) {
+        return productRepository.findAllByPriceBetweenAndBuyerIsNullOrderByPrice(lower, upper)
+                .stream()
+                .map(product -> {
+                    ProductNamePriceAndSellerDTO productNamePriceAndSellerDTO =
+                            modelMapper.map(product, ProductNamePriceAndSellerDTO.class);
+                    productNamePriceAndSellerDTO.setSeller(String.format("%s %s",
+                            product.getSeller().getFirstName(),
+                            product.getSeller().getLastName()));
+                    return productNamePriceAndSellerDTO;
+                }).toList();
     }
 }

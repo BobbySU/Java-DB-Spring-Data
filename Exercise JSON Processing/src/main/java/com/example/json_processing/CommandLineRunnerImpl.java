@@ -1,5 +1,6 @@
 package com.example.json_processing;
 
+import com.example.json_processing.model.dto.CategoryStatsDTO;
 import com.example.json_processing.model.dto.ProductNamePriceAndSellerDTO;
 import com.example.json_processing.model.dto.UserSoldDTO;
 import com.example.json_processing.service.CategoryService;
@@ -24,6 +25,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     public static final String OUTPUT_PATH = "src/main/resources/files/out/";
     public static final String PRODUCTS_IN_RANGE_FILE = "products-in-range.json";
     public static final String USERS_SOLD_PRODUCTS_FILE = "users-sold-products.json";
+    public static final String CATEGORIES_BY_PRODUCTS_FILE = "categories-by-products.json";
 
     private final CategoryService categoryService;
     private final UserService userService;
@@ -51,10 +53,23 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         switch (exNum) {
             case 1 -> Query1_ProductsInRange();
             case 2 -> Query2_SuccessfullySoldProducts();
-//            case 3 -> 3();
-//            case 4 -> 4();
+            case 3 -> Query3_CategoriesByProductsCount();
+//            case 4 -> Query4_UsersAndProducts();
             default -> System.out.println("Please enter valid Exercise/int/");
         }
+    }
+
+    private void Query4_UsersAndProducts() {
+    }
+
+    private void Query3_CategoriesByProductsCount() throws IOException {
+        List<CategoryStatsDTO> categoryStatsDTOS= this.productService.getCategoryStatistics();
+
+        String content = this.gson.toJson(categoryStatsDTOS);
+
+        writeToFile(OUTPUT_PATH + CATEGORIES_BY_PRODUCTS_FILE, content);
+
+        System.out.println("------ Write output information in File: categories-by-products.json ------");
     }
 
     private void Query2_SuccessfullySoldProducts() throws IOException {

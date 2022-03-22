@@ -1,7 +1,6 @@
 package com.example.json_processing.model.dto;
 
 import com.google.gson.annotations.Expose;
-import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.Size;
 

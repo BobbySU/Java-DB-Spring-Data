@@ -1,5 +1,6 @@
 package com.example.json_processing.service.impl;
 
+import com.example.json_processing.model.dto.CategoryStatsDTO;
 import com.example.json_processing.model.dto.ProductNamePriceAndSellerDTO;
 import com.example.json_processing.model.dto.ProductSeedDTO;
 import com.example.json_processing.model.entity.Product;
@@ -18,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.example.json_processing.constants.GlobalConstants.RESOURCES_FILE_PATH;
 
@@ -80,5 +80,10 @@ public class ProductServiceImpl implements ProductService {
                             product.getSeller().getLastName()));
                     return productNamePriceAndSellerDTO;
                 }).toList();
+    }
+
+    @Override
+    public List<CategoryStatsDTO> getCategoryStatistics() {
+        return productRepository.getCategoryStats();
     }
 }

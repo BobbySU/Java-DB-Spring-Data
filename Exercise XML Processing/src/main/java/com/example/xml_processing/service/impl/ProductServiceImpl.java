@@ -2,8 +2,8 @@ package com.example.xml_processing.service.impl;
 
 import com.example.xml_processing.repository.ProductRepository;
 
-import com.example.xml_processing.repository.model.dto.seed.ProductSeedDTO;
-import com.example.xml_processing.repository.model.entity.Product;
+import com.example.xml_processing.model.dto.seed.ProductSeedDTO;
+import com.example.xml_processing.model.entity.Product;
 import com.example.xml_processing.service.CategoryService;
 import com.example.xml_processing.service.ProductService;
 

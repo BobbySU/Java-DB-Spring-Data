@@ -1,8 +1,8 @@
 package com.example.xml_processing.service.impl;
 
 import com.example.xml_processing.repository.UserRepository;
-import com.example.xml_processing.repository.model.dto.seed.UserSeedDTO;
-import com.example.xml_processing.repository.model.entity.User;
+import com.example.xml_processing.model.dto.seed.UserSeedDTO;
+import com.example.xml_processing.model.entity.User;
 import com.example.xml_processing.service.UserService;
 import com.example.xml_processing.util.ValidationUtil;
 import org.modelmapper.ModelMapper;

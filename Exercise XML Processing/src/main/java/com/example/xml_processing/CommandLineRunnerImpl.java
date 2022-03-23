@@ -1,8 +1,8 @@
 package com.example.xml_processing;
 
-import com.example.xml_processing.repository.model.dto.seed.CategorySeedRootDTO;
-import com.example.xml_processing.repository.model.dto.seed.ProductSeedRootDTO;
-import com.example.xml_processing.repository.model.dto.seed.UserSeedRootDTO;
+import com.example.xml_processing.model.dto.seed.CategorySeedRootDTO;
+import com.example.xml_processing.model.dto.seed.ProductSeedRootDTO;
+import com.example.xml_processing.model.dto.seed.UserSeedRootDTO;
 import com.example.xml_processing.service.CategoryService;
 import com.example.xml_processing.service.ProductService;
 import com.example.xml_processing.service.UserService;

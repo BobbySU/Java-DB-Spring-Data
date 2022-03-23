@@ -1,8 +1,8 @@
 package com.example.xml_processing.service.impl;
 
 import com.example.xml_processing.repository.CategoryRepository;
-import com.example.xml_processing.repository.model.dto.seed.CategorySeedDTO;
-import com.example.xml_processing.repository.model.entity.Category;
+import com.example.xml_processing.model.dto.seed.CategorySeedDTO;
+import com.example.xml_processing.model.entity.Category;
 import com.example.xml_processing.service.CategoryService;
 import com.example.xml_processing.util.ValidationUtil;
 import org.modelmapper.ModelMapper;

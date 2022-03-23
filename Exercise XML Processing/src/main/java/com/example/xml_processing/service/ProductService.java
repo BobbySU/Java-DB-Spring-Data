@@ -1,11 +1,7 @@
 package com.example.xml_processing.service;
 
-import com.example.xml_processing.repository.model.dto.CategoryStatsDTO;
-import com.example.xml_processing.repository.model.dto.ProductNamePriceAndSellerDTO;
-import com.example.xml_processing.repository.model.dto.seed.ProductSeedDTO;
+import com.example.xml_processing.model.dto.seed.ProductSeedDTO;
 
-import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService {

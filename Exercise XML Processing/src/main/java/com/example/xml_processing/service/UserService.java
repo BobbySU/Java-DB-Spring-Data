@@ -1,7 +1,7 @@
 package com.example.xml_processing.service;
 
-import com.example.xml_processing.repository.model.dto.seed.UserSeedDTO;
-import com.example.xml_processing.repository.model.entity.User;
+import com.example.xml_processing.model.dto.seed.UserSeedDTO;
+import com.example.xml_processing.model.entity.User;
 
 import java.util.List;
 

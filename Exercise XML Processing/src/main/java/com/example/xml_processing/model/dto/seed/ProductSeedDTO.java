@@ -1,4 +1,4 @@
-package com.example.xml_processing.repository.model.dto.seed;
+package com.example.xml_processing.model.dto.seed;
 
 
 import javax.validation.constraints.Positive;

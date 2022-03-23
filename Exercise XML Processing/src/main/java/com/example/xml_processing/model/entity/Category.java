@@ -1,4 +1,4 @@
-package com.example.xml_processing.repository.model.entity;
+package com.example.xml_processing.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

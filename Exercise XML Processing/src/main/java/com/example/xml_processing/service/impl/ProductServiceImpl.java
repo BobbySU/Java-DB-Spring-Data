@@ -1,5 +1,7 @@
 package com.example.xml_processing.service.impl;
 
+import com.example.xml_processing.model.dto.CategoryStatsDTO;
+import com.example.xml_processing.model.dto.CategoryStatsRootDTO;
 import com.example.xml_processing.model.dto.ProductsRangeDTO;
 import com.example.xml_processing.model.dto.ProductsRangeRootDTO;
 import com.example.xml_processing.repository.ProductRepository;
@@ -75,8 +77,13 @@ public class ProductServiceImpl implements ProductService {
         return productsRangeRootDTO;
     }
 
-//    @Override
-//    public List<CategoryStatsDTO> getCategoryStatistics() {
-//        return productRepository.getCategoryStats();
-//    }
+    @Override
+    public CategoryStatsRootDTO getCategoryStats() {
+        CategoryStatsRootDTO categoryStatsRootDTO = new CategoryStatsRootDTO();
+        categoryStatsRootDTO.setCategories(productRepository.getCategoryStats()
+                .stream()
+                .map(categoryStatsDTO -> modelMapper.map(categoryStatsDTO, CategoryStatsDTO.class))
+                .collect(Collectors.toList()));
+        return categoryStatsRootDTO;
+    }
 }

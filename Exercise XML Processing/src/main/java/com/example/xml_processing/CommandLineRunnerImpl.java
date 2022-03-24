@@ -1,5 +1,6 @@
 package com.example.xml_processing;
 
+import com.example.xml_processing.model.dto.CategoryStatsRootDTO;
 import com.example.xml_processing.model.dto.ProductsRangeRootDTO;
 import com.example.xml_processing.model.dto.UserSoldRootDTO;
 import com.example.xml_processing.model.dto.seed.CategorySeedRootDTO;
@@ -17,9 +18,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Collections;
 
 @Component
 public class CommandLineRunnerImpl implements CommandLineRunner {
@@ -63,8 +61,8 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
                 switch (queryNum) {
                     case 1 -> Query1_ProductsInRange();
                     case 2 -> Query2_SuccessfullySoldProducts();
-//                    case 3 -> Query3_CategoriesByProductsCount();
-//                    case 4 -> Query4_UsersAndProducts();
+                    case 3 -> Query3_CategoriesByProductsCount();
+                    case 4 -> Query4_UsersAndProducts();
                     default -> System.out.println("Please enter valid Query/int/");
                 }
             }
@@ -91,14 +89,12 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     private void Query4_UsersAndProducts() {
     }
 
-    private void Query3_CategoriesByProductsCount() throws IOException {
-//        List<CategoryStatsDTO> categoryStatsDTOS= this.productService.getCategoryStatistics();
-//
-//        String content = this.gson.toJson(categoryStatsDTOS);
-//
-//        writeToFile(OUTPUT_PATH + CATEGORIES_BY_PRODUCTS_FILE, content);
-//
-//        System.out.println("------ Write output information in File: categories-by-products.json ------");
+    private void Query3_CategoriesByProductsCount() throws JAXBException {
+        CategoryStatsRootDTO categoryStatsRootDTO = this.productService.getCategoryStats();
+
+        xmlParser.writeToFile(OUTPUT_PATH + CATEGORIES_BY_PRODUCTS_FILE, categoryStatsRootDTO);
+
+        System.out.println("------ Write output information in File: categories-by-products.xml ------");
     }
 
     private void Query2_SuccessfullySoldProducts() throws JAXBException {

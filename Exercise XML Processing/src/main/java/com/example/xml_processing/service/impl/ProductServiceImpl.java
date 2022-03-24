@@ -1,5 +1,7 @@
 package com.example.xml_processing.service.impl;
 
+import com.example.xml_processing.model.dto.ProductsRangeDTO;
+import com.example.xml_processing.model.dto.ProductsRangeRootDTO;
 import com.example.xml_processing.repository.ProductRepository;
 
 import com.example.xml_processing.model.dto.seed.ProductSeedDTO;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -55,20 +58,23 @@ public class ProductServiceImpl implements ProductService {
                 .forEach(productRepository::save);
     }
 
-//    @Override
-//    public List<ProductNamePriceAndSellerDTO> findAllProductsInRangeOrderByPrice(BigDecimal lower, BigDecimal upper) {
-//        return productRepository.findAllByPriceBetweenAndBuyerIsNullOrderByPrice(lower, upper)
-//                .stream()
-//                .map(product -> {
-//                    ProductNamePriceAndSellerDTO productNamePriceAndSellerDTO =
-//                            modelMapper.map(product, ProductNamePriceAndSellerDTO.class);
-//                    productNamePriceAndSellerDTO.setSeller(String.format("%s %s",
-//                            product.getSeller().getFirstName(),
-//                            product.getSeller().getLastName()));
-//                    return productNamePriceAndSellerDTO;
-//                }).toList();
-//    }
-//
+    @Override
+    public ProductsRangeRootDTO findAllProductsInRangeOrderByPrice(BigDecimal lower, BigDecimal upper) {
+        ProductsRangeRootDTO productsRangeRootDTO = new ProductsRangeRootDTO();
+        productsRangeRootDTO.setProducts(productRepository
+                .findAllByPriceBetweenAndBuyerIsNullOrderByPrice(lower, upper)
+                .stream()
+                .map(product -> {
+                    ProductsRangeDTO productsRangeDTO =
+                            modelMapper.map(product, ProductsRangeDTO.class);
+                    productsRangeDTO.setSeller(String.format("%s %s",
+                            product.getSeller().getFirstName() == null ? "" : product.getSeller().getFirstName(),
+                            product.getSeller().getLastName()));
+                    return productsRangeDTO;
+                }).collect(Collectors.toList()));
+        return productsRangeRootDTO;
+    }
+
 //    @Override
 //    public List<CategoryStatsDTO> getCategoryStatistics() {
 //        return productRepository.getCategoryStats();

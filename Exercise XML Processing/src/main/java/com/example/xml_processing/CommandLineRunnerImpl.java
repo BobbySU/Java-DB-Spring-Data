@@ -1,5 +1,6 @@
 package com.example.xml_processing;
 
+import com.example.xml_processing.model.dto.ProductsRangeRootDTO;
 import com.example.xml_processing.model.dto.seed.CategorySeedRootDTO;
 import com.example.xml_processing.model.dto.seed.ProductSeedRootDTO;
 import com.example.xml_processing.model.dto.seed.UserSeedRootDTO;
@@ -14,6 +15,7 @@ import javax.xml.bind.JAXBException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -25,10 +27,10 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     private static final String CATEGORY_FILE = "categories.xml";
     private static final String PRODUCT_FILE = "products.xml";
     private static final String USER_FILE = "users.xml";
-    public static final String OUTPUT_PATH = "src/main/resources/files/out/";
-    public static final String PRODUCTS_IN_RANGE_FILE = "products-in-range.xml";
-    public static final String USERS_SOLD_PRODUCTS_FILE = "users-sold-products.xml";
-    public static final String CATEGORIES_BY_PRODUCTS_FILE = "categories-by-products.xml";
+    private static final String OUTPUT_PATH = "src/main/resources/files/out/";
+    private static final String PRODUCTS_IN_RANGE_FILE = "products-in-range.xml";
+    private static final String USERS_SOLD_PRODUCTS_FILE = "users-sold-products.xml";
+    private static final String CATEGORIES_BY_PRODUCTS_FILE = "categories-by-products.xml";
 
     private final XmlParser xmlParser;
     private final CategoryService categoryService;
@@ -47,16 +49,40 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        seedDate();
 
         System.out.println(" ------ Please Select Exercise/int/: ------");
         int exNum = Integer.parseInt(bufferedReader.readLine());
 
         switch (exNum) {
-            case 1 -> Query1_ProductsInRange();
-            case 2 -> Query2_SuccessfullySoldProducts();
-            case 3 -> Query3_CategoriesByProductsCount();
-//            case 4 -> Query4_UsersAndProducts();
+            // TODO: 24/03/2022 First Seed DataBase - ex. 1
+            case 1 -> seedProductShopDate();
+            case 2 -> {
+                System.out.println(" ------ Exercise 2: Please Select Query/int/: ------");
+                int queryNum = Integer.parseInt(bufferedReader.readLine());
+                switch (queryNum) {
+                    case 1 -> Query1_ProductsInRange();
+                    case 2 -> Query2_SuccessfullySoldProducts();
+//                    case 3 -> Query3_CategoriesByProductsCount();
+//                    case 4 -> Query4_UsersAndProducts();
+                    default -> System.out.println("Please enter valid Query/int/");
+                }
+            }
+            case 3 -> {
+//                seedCarDealerDate();
+//                System.out.println("------ Seed information in DateBase! ------");
+            }
+
+            case 4 -> {
+                System.out.println(" ------ Exercise 4: Please Select Query/int/: ------");
+                int queryNum = Integer.parseInt(bufferedReader.readLine());
+                switch (queryNum) {
+//                    case 1 -> Query1_();
+//                    case 2 -> Query2_();
+//                    case 3 -> Query3_();
+//                    case 4 -> Query4_();
+                    default -> System.out.println("Please enter valid Query/int/");
+                }
+            }
             default -> System.out.println("Please enter valid Exercise/int/");
         }
     }
@@ -84,28 +110,22 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 //        System.out.println("------ Write output information in File: users-sold-products.json ------");
     }
 
-    private void Query1_ProductsInRange() throws IOException {
-//        List<ProductNamePriceAndSellerDTO> productNamePriceAndSellerDTOS =
-//                productService.findAllProductsInRangeOrderByPrice(BigDecimal.valueOf(500), BigDecimal.valueOf(1000));
-//
-//        String content = gson.toJson(productNamePriceAndSellerDTOS);
-//
-//        writeToFile(OUTPUT_PATH + PRODUCTS_IN_RANGE_FILE, content);
-//
-//        System.out.println("------ Write output information in File: products-in-range.json ------");
+    private void Query1_ProductsInRange() throws JAXBException {
+        ProductsRangeRootDTO productsRangeRootDTO =
+                productService.findAllProductsInRangeOrderByPrice(BigDecimal.valueOf(500), BigDecimal.valueOf(1000));
+
+        xmlParser.writeToFile(OUTPUT_PATH + PRODUCTS_IN_RANGE_FILE, productsRangeRootDTO);
+
+        System.out.println("------ Write output information in File: products-in-range.xml ------");
     }
 
-    private void writeToFile(String filePath, String content) throws IOException {
-        Files.write(Path.of(filePath), Collections.singleton(content));
-    }
-
-    private void seedDate() throws IOException, JAXBException {
+    private void seedProductShopDate() throws IOException, JAXBException {
         if (categoryService.getEntityCount() == 0) {
             CategorySeedRootDTO categorySeedRootDTO = xmlParser.fromFile(
                     RESOURCES_FILE_PATH + CATEGORY_FILE, CategorySeedRootDTO.class);
             categoryService.seedCategory(categorySeedRootDTO.getCategories());
         }
-        if (userService.getEntityCount() == 0){
+        if (userService.getEntityCount() == 0) {
             UserSeedRootDTO userSeedRootDTO = xmlParser.fromFile(
                     RESOURCES_FILE_PATH + USER_FILE, UserSeedRootDTO.class);
             userService.seedUser(userSeedRootDTO.getUsers());
@@ -114,6 +134,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
             ProductSeedRootDTO productSeedRootDTO = xmlParser.fromFile(
                     RESOURCES_FILE_PATH + PRODUCT_FILE, ProductSeedRootDTO.class);
             productService.seedProduct(productSeedRootDTO.getProducts());
+            System.out.println("------ Seeded information in DateBase! ------");
         }
     }
 }

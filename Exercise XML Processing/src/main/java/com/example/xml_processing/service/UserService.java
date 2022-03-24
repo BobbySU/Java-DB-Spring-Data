@@ -1,5 +1,6 @@
 package com.example.xml_processing.service;
 
+import com.example.xml_processing.model.dto.UserSoldRootDTO;
 import com.example.xml_processing.model.dto.seed.UserSeedDTO;
 import com.example.xml_processing.model.entity.User;
 
@@ -12,5 +13,5 @@ public interface UserService {
 
     User findRandomUser();
 
-//    List<UserSoldDTO> findAllUserWithMoreThenOneSoldProduct();
+    UserSoldRootDTO findAllUserWithMoreThenOneSoldProduct();
 }

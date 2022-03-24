@@ -1,6 +1,7 @@
 package com.example.xml_processing;
 
 import com.example.xml_processing.model.dto.ProductsRangeRootDTO;
+import com.example.xml_processing.model.dto.UserSoldRootDTO;
 import com.example.xml_processing.model.dto.seed.CategorySeedRootDTO;
 import com.example.xml_processing.model.dto.seed.ProductSeedRootDTO;
 import com.example.xml_processing.model.dto.seed.UserSeedRootDTO;
@@ -100,14 +101,12 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 //        System.out.println("------ Write output information in File: categories-by-products.json ------");
     }
 
-    private void Query2_SuccessfullySoldProducts() throws IOException {
-//        List<UserSoldDTO> userSoldDTOS = userService.findAllUserWithMoreThenOneSoldProduct();
-//
-//        String content = gson.toJson(userSoldDTOS);
-//
-//        writeToFile(OUTPUT_PATH + USERS_SOLD_PRODUCTS_FILE, content);
-//
-//        System.out.println("------ Write output information in File: users-sold-products.json ------");
+    private void Query2_SuccessfullySoldProducts() throws JAXBException {
+        UserSoldRootDTO userSoldRootDTO = userService.findAllUserWithMoreThenOneSoldProduct();
+
+        xmlParser.writeToFile(OUTPUT_PATH + USERS_SOLD_PRODUCTS_FILE, userSoldRootDTO);
+
+        System.out.println("------ Write output information in File: users-sold-products.xml ------");
     }
 
     private void Query1_ProductsInRange() throws JAXBException {

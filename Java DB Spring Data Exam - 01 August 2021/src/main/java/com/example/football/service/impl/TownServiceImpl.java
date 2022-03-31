@@ -1,5 +1,7 @@
 package com.example.football.service.impl;
 
+import com.example.football.models.dto.TownSeedDTO;
+import com.example.football.models.entity.Town;
 import com.example.football.repository.TownRepository;
 import com.example.football.service.TownService;
 import com.example.football.util.ValidationUtil;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 
 //ToDo - Implement all methods
@@ -40,7 +43,19 @@ public class TownServiceImpl implements TownService {
     }
 
     @Override
-    public String importTowns() {
-        return null;
+    public String importTowns() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        Arrays.stream(gson.fromJson(readTownsFileContent(), TownSeedDTO[].class))
+                .filter(townSeedDTO -> {
+                    boolean isValid = validationUtil.isValid(townSeedDTO);
+                    sb.append(isValid ? String.format("Successfully imported Town %s - %d",
+                                    townSeedDTO.getName(), townSeedDTO.getPopulation())
+                                    : "Invalid Town")
+                            .append(System.lineSeparator());
+                    return isValid;
+                })
+                .map(townSeedDTO -> modelMapper.map(townSeedDTO, Town.class))
+                .forEach(townRepository::save);
+        return sb.toString();
     }
 }

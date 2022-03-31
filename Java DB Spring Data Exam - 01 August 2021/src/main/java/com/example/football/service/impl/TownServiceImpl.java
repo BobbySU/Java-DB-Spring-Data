@@ -58,4 +58,9 @@ public class TownServiceImpl implements TownService {
                 .forEach(townRepository::save);
         return sb.toString();
     }
+
+    @Override
+    public Town FindTownByName(String name) {
+        return townRepository.findTownByName(name);
+    }
 }

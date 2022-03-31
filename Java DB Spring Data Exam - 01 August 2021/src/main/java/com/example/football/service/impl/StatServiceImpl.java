@@ -1,5 +1,7 @@
 package com.example.football.service.impl;
 
+import com.example.football.models.dto.StatSeedRootDTO;
+import com.example.football.models.entity.Stat;
 import com.example.football.repository.StatRepository;
 import com.example.football.service.StatService;
 import com.example.football.util.ValidationUtil;
@@ -7,6 +9,8 @@ import com.example.football.util.XmlParser;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.JAXBException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,7 +43,26 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public String importStats() {
-        return null;
+    public String importStats() throws JAXBException, FileNotFoundException {
+        StringBuilder sb = new StringBuilder();
+        xmlParser.fromFile(STATS_FILE_PATH, StatSeedRootDTO.class)
+                .getStatSeedDTOS()
+                .stream()
+                .filter(statSeedDTO-> {
+                    boolean isValid = validationUtil.isValid(statSeedDTO);
+                    sb.append(isValid ? String.format("Successfully imported Stat %.2f - %.2f - %.2f",
+                                    statSeedDTO.getShooting(), statSeedDTO.getPassing(), statSeedDTO.getEndurance())
+                                    : "Invalid Stat")
+                            .append(System.lineSeparator());
+                    return isValid;
+                })
+                .map(statSeedDTO -> modelMapper.map(statSeedDTO, Stat.class))
+                .forEach(statRepository::save);
+        return sb.toString();
+    }
+
+    @Override
+    public Stat FindStatById(Long id) {
+        return statRepository.findById(id).orElse(null);
     }
 }

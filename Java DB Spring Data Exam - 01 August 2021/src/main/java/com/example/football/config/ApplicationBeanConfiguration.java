@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 //ToDo Create configurations
@@ -28,21 +27,13 @@ public class ApplicationBeanConfiguration {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
 
-//        modelMapper.addConverter(new Converter<String, LocalDate>() {
-//            @Override
-//            public LocalDate convert(MappingContext<String, LocalDate> mappingContext) {
-//                return LocalDate.parse(mappingContext.getSource(),
-//                        DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//            }
-//        });
-//
-//        modelMapper.addConverter(new Converter<String, LocalDateTime>() {
-//            @Override
-//            public LocalDateTime convert(MappingContext<String, LocalDateTime> mappingContext) {
-//                return LocalDateTime.parse(mappingContext.getSource(),
-//                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-//            }
-//        });
+        modelMapper.addConverter(new Converter<String, LocalDate>() {
+            @Override
+            public LocalDate convert(MappingContext<String, LocalDate> mappingContext) {
+                return LocalDate.parse(mappingContext.getSource(),
+                        DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            }
+        });
         return modelMapper;
     }
 

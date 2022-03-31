@@ -58,4 +58,9 @@ public class TeamServiceImpl implements TeamService {
                 .forEach(teamRepository::save);
         return sb.toString();
     }
+
+    @Override
+    public Team FindTeamByName(String name) {
+        return teamRepository.findTeamByName(name);
+    }
 }

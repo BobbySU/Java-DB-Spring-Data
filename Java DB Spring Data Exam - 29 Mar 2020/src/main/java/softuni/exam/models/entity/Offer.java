@@ -2,7 +2,7 @@ package softuni.exam.models.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -12,7 +12,7 @@ public class Offer extends BaseEntity {
     private BigDecimal price;
     private String description;
     private boolean hasGoldStatus;
-    private LocalDate addedOn;
+    private LocalDateTime addedOn;
 
     private Car car;
     private Seller seller;
@@ -49,11 +49,11 @@ public class Offer extends BaseEntity {
     }
 
     @Column(name = "added_on")
-    public LocalDate getAddedOn() {
+    public LocalDateTime getAddedOn() {
         return addedOn;
     }
 
-    public void setAddedOn(LocalDate addedOn) {
+    public void setAddedOn(LocalDateTime addedOn) {
         this.addedOn = addedOn;
     }
 

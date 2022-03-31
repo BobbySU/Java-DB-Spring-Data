@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 
 //ToDo - Implement all methods
 @Service
@@ -80,6 +81,19 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public String exportBestPlayers() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        LocalDate before = LocalDate.of(2003, 1, 1);
+        LocalDate after = LocalDate.of(1995, 1, 1);
+        playerRepository.findByBirthDateBetweenOrderByStatShootingDescStatPassingDescStatEnduranceDescLastNameAsc(after, before)
+                .forEach(player -> {
+                    sb.append(String.format("Player - %s %s\n" +
+                                            "\tPosition - %s\n" +
+                                            "\tTeam - %s\n" +
+                                            "\tStadium - %s\n",
+                                    player.getFirstName(), player.getLastName(), player.getPosition(),
+                                    player.getTeam().getName(), player.getTeam().getStadiumName()))
+                            .append(System.lineSeparator());
+                });
+        return sb.toString();
     }
 }

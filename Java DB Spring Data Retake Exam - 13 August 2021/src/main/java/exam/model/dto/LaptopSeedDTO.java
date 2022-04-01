@@ -1,27 +1,32 @@
-package exam.model;
+package exam.model.dto;
 
+import com.google.gson.annotations.Expose;
+import exam.model.Shop;
 import exam.model.enums.WarrantyType;
 
-import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "laptop")
-public class Laptop extends BaseEntity{
+public class LaptopSeedDTO {
 
+    @Expose
     private String macAddress;
+    @Expose
     private double cpuSpeed;
+    @Expose
     private int ram;
+    @Expose
     private int storage;
+    @Expose
     private String description;
+    @Expose
     private BigDecimal price;
+    @Expose
     private WarrantyType warrantyType;
-    private Shop shop;
+    @Expose
+    private ShopDTO shop;
 
-    public Laptop() {
-    }
-
-    @Column(name = "mac_address",unique = true)
+    @Size(min = 9)
     public String getMacAddress() {
         return macAddress;
     }
@@ -30,7 +35,7 @@ public class Laptop extends BaseEntity{
         this.macAddress = macAddress;
     }
 
-    @Column(name = "cpu_speed")
+    @Positive
     public double getCpuSpeed() {
         return cpuSpeed;
     }
@@ -39,6 +44,8 @@ public class Laptop extends BaseEntity{
         this.cpuSpeed = cpuSpeed;
     }
 
+    @Min(8)
+    @Max(128)
     public int getRam() {
         return ram;
     }
@@ -47,7 +54,8 @@ public class Laptop extends BaseEntity{
         this.ram = ram;
     }
 
-
+    @Min(128)
+    @Max(1024)
     public int getStorage() {
         return storage;
     }
@@ -56,7 +64,7 @@ public class Laptop extends BaseEntity{
         this.storage = storage;
     }
 
-    @Column(columnDefinition = "TEXT")
+    @Size(min = 10)
     public String getDescription() {
         return description;
     }
@@ -65,6 +73,7 @@ public class Laptop extends BaseEntity{
         this.description = description;
     }
 
+    @Positive
     public BigDecimal getPrice() {
         return price;
     }
@@ -73,7 +82,7 @@ public class Laptop extends BaseEntity{
         this.price = price;
     }
 
-    @Enumerated
+    @NotNull
     public WarrantyType getWarrantyType() {
         return warrantyType;
     }
@@ -82,12 +91,11 @@ public class Laptop extends BaseEntity{
         this.warrantyType = warrantyType;
     }
 
-    @ManyToOne
-    public Shop getShop() {
+    public ShopDTO getShop() {
         return shop;
     }
 
-    public void setShop(Shop shop) {
+    public void setShop(ShopDTO shop) {
         this.shop = shop;
     }
 }

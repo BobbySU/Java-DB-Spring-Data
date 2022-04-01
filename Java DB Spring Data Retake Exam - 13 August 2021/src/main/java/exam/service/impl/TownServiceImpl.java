@@ -1,5 +1,7 @@
 package exam.service.impl;
 
+import exam.model.Town;
+import exam.model.dto.TownSeedRootDTO;
 import exam.repository.TownRepository;
 import exam.service.TownService;
 import exam.util.ValidationUtil;
@@ -41,6 +43,25 @@ public class TownServiceImpl implements TownService {
 
     @Override
     public String importTowns() throws JAXBException, FileNotFoundException {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        xmlParser.fromFile(TOWNS_FILE_PATH, TownSeedRootDTO.class)
+                .getTowns()
+                .stream()
+                .filter(townSeedDTO -> {
+                    boolean isValid = validationUtil.isValid(townSeedDTO);
+                    sb.append(isValid ? String.format("Successfully imported Town %s",
+                                    townSeedDTO.getName())
+                                    : "Invalid Town")
+                            .append(System.lineSeparator());
+                    return isValid;
+                })
+                .map(townSeedDTO ->  modelMapper.map(townSeedDTO, Town.class))
+                .forEach(townRepository::save);
+        return sb.toString();
+    }
+
+    @Override
+    public Town FindTownByName(String name) {
+        return townRepository.findTownByName(name);
     }
 }

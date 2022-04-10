@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-//ToDo
 @Configuration
 public class ApplicationBeanConfiguration {
     @Bean

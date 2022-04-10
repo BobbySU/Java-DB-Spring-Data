@@ -49,6 +49,9 @@ public class CustomerServiceImpl implements CustomerService {
         Arrays.stream(gson.fromJson(readCustomersFileContent(), CustomerSeedDTO[].class))
                 .filter(customerSeedDTO -> {
                     boolean isValid = validationUtil.isValid(customerSeedDTO);
+                    if (customerRepository.findCustomerByEmail(customerSeedDTO.getEmail()) != null){
+                        isValid = false;
+                    }
                     sb.append(isValid ? String.format("Successfully imported Customer %s %s - %s",
                                     customerSeedDTO.getFirstName(), customerSeedDTO.getLastName(),
                                     customerSeedDTO.getEmail())

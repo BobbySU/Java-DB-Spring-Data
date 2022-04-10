@@ -50,6 +50,9 @@ public class LaptopServiceImpl implements LaptopService {
         Arrays.stream(gson.fromJson(readLaptopsFileContent(), LaptopSeedDTO[].class))
                 .filter(laptopSeedDTO -> {
                     boolean isValid = validationUtil.isValid(laptopSeedDTO);
+                    if (laptopRepository.findLaptopByMacAddress(laptopSeedDTO.getMacAddress()) != null){
+                        isValid = false;
+                    }
                     sb.append(isValid ? String.format("Successfully imported Laptop %s - %.2f - %d - %d",
                                     laptopSeedDTO.getMacAddress(), laptopSeedDTO.getCpuSpeed(),
                                     laptopSeedDTO.getRam(), laptopSeedDTO.getStorage())

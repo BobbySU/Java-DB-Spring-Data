@@ -52,6 +52,9 @@ public class ShopServiceImpl implements ShopService {
                 .stream()
                 .filter(shopSeedDTO -> {
                     boolean isValid = validationUtil.isValid(shopSeedDTO);
+                    if (shopRepository.findShopByName(shopSeedDTO.getName()) != null){
+                        isValid = false;
+                    }
                     sb.append(isValid ? String.format("Successfully imported Shop %s - %.0f",
                                     shopSeedDTO.getName(), shopSeedDTO.getIncome())
                                     : "Invalid Shop")

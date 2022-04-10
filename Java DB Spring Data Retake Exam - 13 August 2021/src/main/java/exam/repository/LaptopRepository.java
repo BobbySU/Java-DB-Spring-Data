@@ -7,10 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//ToDo:
 @Repository
 public interface LaptopRepository extends JpaRepository<Laptop, Long> {
 
     @Query("SELECT l FROM Laptop l ORDER BY l.cpuSpeed DESC, l.ram DESC, l.storage DESC, l.macAddress")
     List<Laptop> findAllOrderByCpuSpeedDescRamDescStorageDescMacAddress();
+
+    Laptop findLaptopByMacAddress(String macAddress);
 }

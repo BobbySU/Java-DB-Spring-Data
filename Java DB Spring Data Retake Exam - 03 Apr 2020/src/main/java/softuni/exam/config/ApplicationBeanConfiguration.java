@@ -6,9 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import softuni.exam.util.ValidationUtil;
-import softuni.exam.util.ValidationUtilImpl;
+import softuni.exam.util.impl.ValidationUtilImpl;
 import softuni.exam.util.XmlParser;
-import softuni.exam.util.XmlParserImpl;
+import softuni.exam.util.impl.XmlParserImpl;
 
 
 @Configuration

@@ -1,9 +1,7 @@
 package softuni.exam.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "passenger")
@@ -15,6 +13,7 @@ public class Passenger extends BaseEntity{
     private String phoneNumber;
     private String email;
     private Town town;
+    private Set<Ticket> tickets;
 
     public Passenger() {
     }
@@ -70,5 +69,14 @@ public class Passenger extends BaseEntity{
 
     public void setTown(Town town) {
         this.town = town;
+    }
+
+    @OneToMany(mappedBy = "passenger", fetch = FetchType.EAGER)
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

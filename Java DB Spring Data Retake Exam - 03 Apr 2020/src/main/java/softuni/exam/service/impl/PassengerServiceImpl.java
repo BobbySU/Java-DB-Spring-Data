@@ -53,7 +53,7 @@ public class PassengerServiceImpl implements PassengerService {
         Arrays.stream(gson.fromJson(readPassengersFileContent(), PassengerSeedDTO[].class))
                 .filter(passengerSeedDTO -> {
                     boolean isValid = validationUtil.isValid(passengerSeedDTO);
-                    if (passengerRepository.findPassengerByEmail(passengerSeedDTO.getEmail()) != null){
+                    if (passengerRepository.findPassengerByEmail(passengerSeedDTO.getEmail()) != null) {
                         isValid = false;
                     }
                     sb.append(isValid ? String.format("Successfully imported Passenger %s - %s",
@@ -73,7 +73,21 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public String getPassengersOrderByTicketsCountDescendingThenByEmail() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        passengerRepository.FindPassengersOrderByTicketsCountDescendingThenByEmail()
+                .forEach(passenger -> {
+                    if (passenger.getTickets().size() > 0) {
+                        sb.append(String.format("Passenger %s  %s\n" +
+                                                "\tEmail - %s\n" +
+                                                "\tPhone - %s\n" +
+                                                "\tNumber of tickets - %d\n",
+                                        passenger.getFirstName(), passenger.getLastName(),
+                                        passenger.getEmail(), passenger.getPhoneNumber(),
+                                        passenger.getTickets().size()))
+                                .append(System.lineSeparator());
+                    }
+                });
+        return sb.toString();
     }
 
     @Override

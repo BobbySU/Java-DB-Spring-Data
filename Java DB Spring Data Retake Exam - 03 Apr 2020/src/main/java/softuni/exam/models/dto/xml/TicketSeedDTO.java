@@ -1,9 +1,5 @@
 package softuni.exam.models.dto.xml;
 
-import softuni.exam.models.Passenger;
-import softuni.exam.models.Plane;
-import softuni.exam.models.Town;
-
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;

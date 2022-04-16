@@ -21,7 +21,7 @@ import java.nio.file.Path;
 @Service
 public class TicketServiceImpl implements TicketService {
 
-    private static final String TICKETS_FILE_PATH = "src/main/resources/files/xml/planes.xml";
+    private static final String TICKETS_FILE_PATH = "src/main/resources/files/xml/tickets.xml";
 
     private final TicketRepository ticketRepository;
     private final ModelMapper modelMapper;

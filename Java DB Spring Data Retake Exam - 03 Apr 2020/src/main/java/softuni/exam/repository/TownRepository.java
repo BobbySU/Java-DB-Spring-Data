@@ -7,4 +7,5 @@ import softuni.exam.models.Town;
 @Repository
 public interface TownRepository extends JpaRepository<Town, Long> {
 
+    Town findTownByName(String name);
 }

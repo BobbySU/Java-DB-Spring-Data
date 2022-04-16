@@ -1,5 +1,7 @@
 package softuni.exam.service;
 
+import softuni.exam.models.Passenger;
+
 import java.io.IOException;
 
 //ToDo - Before start App implement this Service and set areImported to return false
@@ -13,4 +15,6 @@ public interface PassengerService {
 	String importPassengers() throws IOException;
 
 	String getPassengersOrderByTicketsCountDescendingThenByEmail();
+
+    Passenger FindPassengerByEmail(String email);
 }

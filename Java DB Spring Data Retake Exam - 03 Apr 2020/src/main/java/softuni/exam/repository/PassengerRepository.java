@@ -6,5 +6,6 @@ import softuni.exam.models.Passenger;
 
 @Repository
 public interface PassengerRepository extends JpaRepository<Passenger, Long> {
-    
+
+    Passenger findPassengerByEmail(String email);
 }
